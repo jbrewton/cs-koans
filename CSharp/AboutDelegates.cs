@@ -33,31 +33,31 @@ namespace DotNetKoans.CSharp
 		{
 			MyMath math = new MyMath();
 			BinaryOp op = new BinaryOp(math.Add);
-			Assert.Equal(FILL_ME_IN, op.Method.Name);
+			Assert.Equal("Add", op.Method.Name);
 		}
 		[Koan(2)]
 		public void DelegatesCanBeAssigned()
 		{
 			MyMath math = new MyMath();
 			BinaryOp op = math.Add;
-			Assert.Equal(FILL_ME_IN, op.Method.Name);
+			Assert.Equal("Add", op.Method.Name);
 		}
 		[Koan(3)]
 		public void DelegatesCanReferenceStaticMethods()
 		{
 			BinaryOp op = MyMath.Subtract;
-			Assert.Equal(FILL_ME_IN, op.Method.Name);
+			Assert.Equal("Subtract", op.Method.Name);
 		}
 		[Koan(4)]
 		public void MethodsCalledViaDelegate()
 		{
 			MyMath math = new MyMath();
 			BinaryOp op = math.Add;
-			Assert.Equal(FILL_ME_IN, op(3,3));
+			Assert.Equal(6, op(3,3));
 		}
 		private void PassMeTheDelegate(BinaryOp passed)
 		{
-            Assert.Equal(FILL_ME_IN, passed(3,3));
+            Assert.Equal(6, passed(3,3));
         }
 		[Koan(5)]
 		public void DelegatesCanBePassed()
@@ -82,7 +82,7 @@ namespace DotNetKoans.CSharp
 			Assert.Same(a, original);
 			a = MyMath.Subtract;
 			//a is now a different instance
-			Assert.Same(a, original);
+			Assert.NotSame(a, original);
 		}
 		delegate int Curry(int val);
 		public class FunctionalTricks
@@ -102,10 +102,10 @@ namespace DotNetKoans.CSharp
 			FunctionalTricks f = new FunctionalTricks();
 			Curry adding = f.Add5;
 			//So far we've only seen one method attached to a delegate. 
-			Assert.Equal(FILL_ME_IN, adding.GetInvocationList().Length);
+			Assert.Equal(1, adding.GetInvocationList().Length);
 			//However, you can attach multiple methods to a delegate 
 			adding += f.Add10;
-			Assert.Equal(FILL_ME_IN, adding.GetInvocationList().Length);
+			Assert.Equal(2, adding.GetInvocationList().Length);
 		}
 		[Koan(9)]
 		public void OnlyLastResultReturned()
@@ -114,7 +114,7 @@ namespace DotNetKoans.CSharp
 			Curry adding = f.Add5;
 			adding += f.Add10;
 			//Delegates may have more than one method attached, but only the result of the last method is returned.
-			Assert.Equal(FILL_ME_IN, adding(5));
+			Assert.Equal(15, adding(5));
 		}
 		[Koan(10)]
 		public void RemovingMethods()
@@ -123,7 +123,8 @@ namespace DotNetKoans.CSharp
 			Curry adding = f.Add5;
 			adding += f.Add10;
 			Assert.Equal(2, adding.GetInvocationList().Length);
-			//Remove Add5 from the invocation list using -=
+            //Remove Add5 from the invocation list using -=
+            adding -= f.Add5;
 			Assert.Equal(1, adding.GetInvocationList().Length);
 			Assert.Equal("Add10", adding.Method.Name);
 		}
@@ -150,21 +151,21 @@ namespace DotNetKoans.CSharp
 			//  public delgate void Action<T>(T obj);
 
 			Action<int> i = AssertIntEqualsFourtyTwo;
-			i((int)FILL_ME_IN);
+			i(42);
 		}
 		[Koan(12)]
 		public void BuiltInActionDelegateTakesString()
 		{
 			// Because the delegate is a template, it also works with any other type. 
 			Action<string> s = AssertStringEqualsFourtyTwo;
-			s((string)FILL_ME_IN);
+			s("42");
 		}
 		[Koan(13)]
 		public void BuiltInActionDelegateIsOverloaded()
 		{
 			//Action is an overloaded delegate so it can take more than one paramter
 			Action<int, string> a = AssertAddEqualsFourtyTwo;
-			a(12, (string)FILL_ME_IN);
+			a(12, "30");
 		}
 		public class Seen
 		{
@@ -189,7 +190,7 @@ namespace DotNetKoans.CSharp
 
 			Array.ForEach(greeting.ToCharArray(), s.Look);
 
-			Assert.Equal(FILL_ME_IN, s.Letters);
+			Assert.Equal("Hello world", s.Letters);
 		}
 
 		private bool IntEqualsFourtyTwo(int x)
@@ -208,14 +209,14 @@ namespace DotNetKoans.CSharp
 			//Predicate allows you to codify a condition and pass it around. 
 			//You use it to determine if an object satisfies some criteria. 
 
-			Predicate<int> i = (Predicate<int>)FILL_ME_IN;
+			Predicate<int> i = IntEqualsFourtyTwo;
 			Assert.True(i(42));
 		}
 		[Koan(16)]
 		public void BuiltInPredicateDelegateStringSatisfied()
 		{
 			//Because it is a template, you can work with any type
-			Predicate<string> s = (Predicate<string>)FILL_ME_IN;
+			Predicate<string> s = StringEqualsFourtyTwo;
 			Assert.True(s("42"));
 
 			//Predicate can have only one argument, so unlike Action<> you cannot do this...
@@ -233,7 +234,7 @@ namespace DotNetKoans.CSharp
 			//Predicate can be used to find an element in an array
 			var countries = new []{ "Greece", "Spain", "Uruguay", "Japan" };
 
-			Assert.Equal(FILL_ME_IN, Array.Find(countries, StartsWithS));
+			Assert.Equal("Spain", Array.Find(countries, StartsWithS));
 		}
 
 		private bool IsInSouthAmerica(string country)
@@ -247,7 +248,7 @@ namespace DotNetKoans.CSharp
 			//Predicate can also be used when verifying 
 			var countries = new[] { "Greece", "Spain", "Uruguay", "Japan" };
 
-			Assert.Equal(FILL_ME_IN, Array.TrueForAll(countries, IsInSouthAmerica));
+			Assert.Equal(false, Array.TrueForAll(countries, IsInSouthAmerica));
 		}
 
 		private string FirstMonth()
@@ -269,16 +270,16 @@ namespace DotNetKoans.CSharp
 			//If you specify more than one parameter, then you are specifying the paramter types as well.
 
 			Func<string> d = FirstMonth;
-			Assert.Equal(FILL_ME_IN, d());
+			Assert.Equal("January", d());
 		}
 		[Koan(20)]
 		public void FunctionReturnsInt()
 		{
 			//Like Action<>, Func<> is overloaded and can take a variable number of parameters.
 			//The first type parameters define the parameter types and the last one is the return type. So the following matches
-			//a method which takes two int parameters and returns a string.
+			//a method which takes two int parameters and returns an int.
 			Func<int, int, int> a = Add;
-			Assert.Equal(FILL_ME_IN, a(1, 1));
+			Assert.Equal(2, a(1, 1));
 		}
 
 		public class Car
@@ -307,7 +308,7 @@ namespace DotNetKoans.CSharp
 			Comparison<Car> by = SortByModel;
 			Array.Sort(cars, by);
 
-			Assert.Equal(FILL_ME_IN, cars[0].Model);
+			Assert.Equal("GTV-6", cars[0].Model);
 		}
 
 		private string Stringify(int x)
@@ -325,7 +326,7 @@ namespace DotNetKoans.CSharp
 
 			var result = Array.ConvertAll(numbers, c);
 
-			Assert.Equal(FILL_ME_IN, result);
+			Assert.Equal(new string[] { "1", "2", "3", "4" }, result);
 		}
 	}
 }

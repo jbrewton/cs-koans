@@ -36,30 +36,30 @@ namespace DotNetKoans.CSharp
 
             // modify a field:
             obj.a = 2;
-            Assert.Equal(FILL_ME_IN, obj.a);
+            Assert.Equal(2, obj.a);
 
             // call a method:
-            Assert.Equal(FILL_ME_IN, obj.GetSquareOfA());
+            Assert.Equal(4, obj.GetSquareOfA());
 
             // But you can only access them if they are public. This would be illegal:
             //obj.b = 3;
 
             // But methods of the class can access non-public fields:
-            Assert.Equal(FILL_ME_IN, obj.GetB());
+            Assert.Equal(2, obj.GetB());
         }
         [Koan(2)]
         public void Constructors()
         {
             // Classes can can have constructors which are called when you create an object of the class with new:
             Example1 obj = new Example1();
-            Assert.Equal(FILL_ME_IN, obj.a);
+            Assert.Equal(1, obj.a);
         }
         [Koan(3)]
         public void ConstructorsWithArguments()
         {
             // Classes can can have constructors with arguments:
             Example1 obj = new Example1(3);
-            Assert.Equal(FILL_ME_IN, obj.a);
+            Assert.Equal(3, obj.a);
         }
 
         class ClassWithPublicField
@@ -80,7 +80,7 @@ namespace DotNetKoans.CSharp
             obj1.n = 1;
             ClassWithPublicField obj2 = obj1;
             obj2.n = 5;
-            Assert.Equal(FILL_ME_IN, obj1.n);
+            Assert.Equal(5, obj1.n);
         }
         
         void Assign5ToN(ClassWithPublicField objInFunction)
@@ -97,7 +97,7 @@ namespace DotNetKoans.CSharp
             ClassWithPublicField obj = new ClassWithPublicField();
             obj.n = 1;
             Assign5ToN(obj);
-            Assert.Equal(FILL_ME_IN, obj.n);
+            Assert.Equal(5, obj.n);
         }
         
         void RecreateObject(ClassWithPublicField objInFunction)
@@ -117,7 +117,7 @@ namespace DotNetKoans.CSharp
             ClassWithPublicField obj = new ClassWithPublicField();
             obj.n = 1;
             RecreateObject(obj);
-            Assert.Equal(FILL_ME_IN, obj.n);
+            Assert.Equal(1, obj.n);
         }
 
         struct StructWithPublicField
@@ -137,7 +137,7 @@ namespace DotNetKoans.CSharp
             obj1.n = 1;
             StructWithPublicField obj2 = obj1;
             obj2.n = 2;
-            Assert.Equal(FILL_ME_IN, obj1.n);
+            Assert.Equal(1, obj1.n);
         }
 
         void Assign10ToN(StructWithPublicField objInFunction)
@@ -155,7 +155,7 @@ namespace DotNetKoans.CSharp
             StructWithPublicField obj = new StructWithPublicField();
             obj.n = 1;
             Assign10ToN(obj);
-            Assert.Equal(FILL_ME_IN, obj.n);
+            Assert.Equal(1, obj.n);
         }
     }
 }

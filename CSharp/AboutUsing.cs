@@ -29,9 +29,9 @@ namespace DotNetKoans.CSharp
             // An example of such a class is File, whose Dispose method closes the file.
             using (MyClass obj = new MyClass())
             {
-                Assert.Equal(FILL_ME_IN, disposeCalled);
+                Assert.Equal(false, disposeCalled);
             }
-            Assert.Equal(FILL_ME_IN, disposeCalled);
+            Assert.Equal(true, disposeCalled);
         }
 
         [Koan(2)]
@@ -41,12 +41,12 @@ namespace DotNetKoans.CSharp
             {
                 using (MyClass obj = new MyClass())
                 {
-                    Assert.Equal(FILL_ME_IN, disposeCalled);
+                    Assert.Equal(false, disposeCalled);
                 }
             }
             catch (Exception)
             {
-                Assert.Equal(FILL_ME_IN, disposeCalled);
+                Assert.Equal(true, disposeCalled);
             }
         }
 
@@ -60,7 +60,7 @@ namespace DotNetKoans.CSharp
 
                 // But its members can be changed:
                 obj.value = "xyz";
-                Assert.Equal(FILL_ME_IN, obj.value);
+                Assert.Equal("xyz", obj.value);
             }
         }
 
@@ -73,7 +73,7 @@ namespace DotNetKoans.CSharp
             using (obj)
             {
             }
-            Assert.Equal(FILL_ME_IN, obj.value);
+            Assert.Equal(null, obj.value);
         }
     }
 }
